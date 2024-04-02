@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33502.453
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Roq.Automation.Demo.DemoBlaze", "Roq.Automation.Demo.DemoBlaze\Roq.Automation.Demo.DemoBlaze.csproj", "{1FB896C5-1DCA-42DD-8915-9FD9F91AA366}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1FB896C5-1DCA-42DD-8915-9FD9F91AA366}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FB896C5-1DCA-42DD-8915-9FD9F91AA366}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FB896C5-1DCA-42DD-8915-9FD9F91AA366}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FB896C5-1DCA-42DD-8915-9FD9F91AA366}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B5663F6B-55FC-4B25-B3B6-8F6BD2A8CD8D}
+	EndGlobalSection
+EndGlobal
