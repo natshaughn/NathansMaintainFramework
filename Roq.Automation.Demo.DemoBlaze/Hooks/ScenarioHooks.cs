@@ -11,10 +11,11 @@ namespace Roq.Automation.Demo.DemoBlaze.Hooks
 		[BeforeScenario]
 		public static void BeforeScenario()
 		{
-			DriverManager.StartDriver("Firefox");
+			DriverManager.StartDriver("Edge"); //Changed from "Firefox" because it's not implemented in Driver Manager class
 		}
 
 		[AfterScenario]
+		// COME BACK TO THIS AND COMPARE WITH DESKTOP ONE
 		public static void AfterScenario(ScenarioContext scenarioContext)
 		{
 			if (scenarioContext.TestError != null)

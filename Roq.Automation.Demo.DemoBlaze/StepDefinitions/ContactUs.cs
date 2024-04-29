@@ -14,13 +14,15 @@ namespace Roq.Automation.Demo.DemoBlaze.StepDefinitions
 		[When(@"I open the contact us menu")]
 		public void WhenIOpenTheContactUsMenu()
 		{
-			DriverManager.WebDriver.FindElement(Pages.Home.Cart).Click();
+			// Changed from Cart to Contact
+			DriverManager.WebDriver.FindElement(Pages.Home.Contact).Click();
 		}
 
 		[Given(@"I open the contact us menu")]
 		public void GivenIOpenTheContactUsMenu()
 		{
-			DriverManager.WebDriver.FindElement(Pages.Home.Cart).Click();
+            // Changed from Cart to Contact
+            DriverManager.WebDriver.FindElement(Pages.Home.Contact).Click();
 		}
 
 		[Then(@"the contact us menu is displayed")]
@@ -35,16 +37,19 @@ namespace Roq.Automation.Demo.DemoBlaze.StepDefinitions
 		[When(@"I complete the contact us form")]
 		public void WhenICompleteTheContactUsForm()
 		{
+			// Added .message 
 			DriverManager.WebDriver.FindElement(Pages.Popups.ContactUs.Email).SendKeys("FakeEmail@roq.co.uk");
 			DriverManager.WebDriver.FindElement(Pages.Popups.ContactUs.Name).SendKeys("FakeEmail@roq.co.uk");
-			DriverManager.WebDriver.FindElement(Pages.Popups.ContactUs.Name).SendKeys("Blah");
+			DriverManager.WebDriver.FindElement(Pages.Popups.ContactUs.Message).SendKeys("Blah");
 			DriverManager.WebDriver.FindElement(Pages.Popups.ContactUs.SendMessage).Click();
-		}
+        }
 
 		[Then(@"the contact us form is submitted")]
 		public void ThenTheContactUsFormIsSubmitted()
 		{
 			Assert.IsTrue(Alerts.IsAlertPresent());
-		}
+            // Added this:
+            DriverManager.WebDriver.SwitchTo().Alert().Accept();
+        }
 	}
 }

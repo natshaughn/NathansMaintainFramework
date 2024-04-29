@@ -1,4 +1,5 @@
-﻿using Roq.Automation.Demo.DemoBlaze.Utilities;
+﻿using OpenQA.Selenium;
+using Roq.Automation.Demo.DemoBlaze.Utilities;
 using TechTalk.SpecFlow;
 
 namespace Roq.Automation.Demo.DemoBlaze.StepDefinitions
@@ -25,8 +26,15 @@ namespace Roq.Automation.Demo.DemoBlaze.StepDefinitions
 		[Then(@"the order is placed")]
 		public void ThenTheOrderIsPlaced()
 		{
-			Assert.IsTrue(Alerts.IsAlertPresent());
-		}
+            // Not an alert
+            // Assert.IsTrue(Alerts.IsAlertPresent());
 
-	}
+            // Check if the message is displayed
+            IWebElement confirmationMessage = DriverManager.WebDriver.FindElement(By.XPath("//div[@class='sweet-alert  showSweetAlert visible']"));
+
+            // Assert that the message is displayed
+            Assert.IsTrue(confirmationMessage.Displayed, "Confirmation message is not displayed after placing the order.");
+        }
+
+    }
 }

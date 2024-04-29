@@ -40,7 +40,7 @@ Scenario: Nexus 6 Product Page Displays Correct Product Description
 
 Scenario: Samsung galaxy s7 Product Page Displays Correct Product Description
 
-	When I open the product page for the "Nexus 6"
+	When I open the product page for the "Samsung galaxy s7"
 	Then the product description is:
 		| description                                                                                                                                                                  |
 		| The Samsung Galaxy S7 is powered by 1.6GHz octa-core it comes with 4GB of RAM. The phone packs 32GB of internal storage that can be expanded up to 200GB via a microSD card. |
