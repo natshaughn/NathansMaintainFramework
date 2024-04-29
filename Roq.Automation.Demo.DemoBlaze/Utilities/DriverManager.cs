@@ -25,6 +25,8 @@ namespace Roq.Automation.Demo.DemoBlaze.Utilities
 					break;
 			}
 
+			//maximise window
+			WebDriver.Manage().Window.Maximize();
 			WebDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
 			WebDriver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(30);
 		}

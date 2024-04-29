@@ -11,25 +11,27 @@ namespace Roq.Automation.Demo.DemoBlaze.StepDefinitions
 		public void GivenIAmOnTheDemoBlazeWebsite()
 		{
 			DriverManager.WebDriver.Navigate().GoToUrl(Pages.Home.url);
+            DriverManager.WebDriver.FindElement(Pages.Home.SignUp).Click();
 
-			string username = Guid.NewGuid().ToString();
+            string username = Guid.NewGuid().ToString();
 			string password = Guid.NewGuid().ToString();
 
-			DriverManager.WebDriver.FindElement(Pages.Home.SignUp).Click();
+			
 
 			DriverManager.WebDriver.FindElement(Pages.Popups.SignUp.Username).SendKeys(username);
 			DriverManager.WebDriver.FindElement(Pages.Popups.SignUp.Password).SendKeys(password);
 			DriverManager.WebDriver.FindElement(Pages.Popups.SignUp.SignUpButton).Click();
-			Thread.Sleep(TimeSpan.FromSeconds(5));
+			Thread.Sleep(TimeSpan.FromSeconds(3));
 			DriverManager.WebDriver.SwitchTo().Alert().Accept();
+            Thread.Sleep(TimeSpan.FromSeconds(3));
 
-			DriverManager.WebDriver.FindElement(Pages.Home.LogIn).Click();
-			Thread.Sleep(TimeSpan.FromSeconds(5));
+            DriverManager.WebDriver.FindElement(Pages.Home.LogIn).Click();
+			Thread.Sleep(TimeSpan.FromSeconds(3));
 
 			DriverManager.WebDriver.FindElement(Pages.Popups.LogIn.Username).SendKeys(username);
 			DriverManager.WebDriver.FindElement(Pages.Popups.LogIn.Password).SendKeys(password);
 			DriverManager.WebDriver.FindElement(Pages.Popups.LogIn.LogInButton).Click();
-			Thread.Sleep(TimeSpan.FromSeconds(5));
+			Thread.Sleep(TimeSpan.FromSeconds(3));
 
 		}
 
@@ -80,25 +82,32 @@ namespace Roq.Automation.Demo.DemoBlaze.StepDefinitions
 			Thread.Sleep(TimeSpan.FromSeconds(10));
 		}
 
-		[Then(@"the total of my basket is correct")]
+        /*[Then(@"the total of my basket is correct")]
 		public void ThenTheTotalOfMyBasketIsCorrect()
 		{
 			Assert.IsTrue(Pages.Cart.PriceIsCorrect((int)TestData.TestDataDictionary["CartTotal"]));
-		}
+		}*/
 
-		[When(@"I navigate to the home page")]
+        [Then(@"the total of the basket is correct")]
+        public void ThenTheTotalOfTheBasketIsCorrect()
+        {
+            Assert.IsTrue(Pages.Cart.PriceIsCorrect((int)TestData.TestDataDictionary["CartTotal"]));
+        }
+
+
+        [When(@"I navigate to the home page")]
 		public void WhenINavigateToTheHomePage()
 		{
 			DriverManager.WebDriver.Navigate().GoToUrl(Pages.Home.url);
 		}
 
 		[Then(@"the total of my basket is (.*)")]
-		public void ThenTheTotalOfMyBasketIs(int p0)
-		{
-			Assert.IsTrue(Pages.Cart.PriceIsCorrect(p0));
-		}
+        public void ThenTheTotalOfMyBasketIs(int p0)
+        {
+            Assert.IsTrue(Pages.Cart.PriceIsCorrect(p0));
+        }
 
-		[When(@"I open the basket")]
+        [When(@"I open the basket")]
 		public void WhenIOpenTheBasket()
 		{
 			DriverManager.WebDriver.FindElement(Pages.Home.Cart).Click();

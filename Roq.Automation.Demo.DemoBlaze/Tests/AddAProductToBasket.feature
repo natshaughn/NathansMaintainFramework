@@ -8,7 +8,7 @@ Scenario: Add a product to my basket shows the correct price
 	Given I am on a product page
 	When I add the product to my basket
 	And I navigate to my basket
-	Then the total of my basket is correct
+	Then the total of the basket is correct
 
 Scenario: Add two products to my basket shows the correct price
 
@@ -18,7 +18,7 @@ Scenario: Add two products to my basket shows the correct price
 	Given I am on a product page
 	When I add the product to my basket
 	And I navigate to my basket
-	Then the total of my basket is correct
+	Then the total of the basket is correct
 
 	@FailingTest
 	#This test intentionally fails, do not modify it.
