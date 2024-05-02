@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Internal;
 using Roq.Automation.Demo.DemoBlaze.Utilities;
 using TechTalk.SpecFlow;
 
@@ -14,26 +15,31 @@ namespace Roq.Automation.Demo.DemoBlaze.StepDefinitions
             DriverManager.WebDriver.FindElement(Pages.Home.SignUp).Click();
 
             string username = Guid.NewGuid().ToString();
-			string password = Guid.NewGuid().ToString();
-
-			
+			string password = Guid.NewGuid().ToString();			
 
 			DriverManager.WebDriver.FindElement(Pages.Popups.SignUp.Username).SendKeys(username);
 			DriverManager.WebDriver.FindElement(Pages.Popups.SignUp.Password).SendKeys(password);
 			DriverManager.WebDriver.FindElement(Pages.Popups.SignUp.SignUpButton).Click();
-			Thread.Sleep(TimeSpan.FromSeconds(3));
-			DriverManager.WebDriver.SwitchTo().Alert().Accept();
-            Thread.Sleep(TimeSpan.FromSeconds(3));
 
+            Thread.Sleep(TimeSpan.FromSeconds(3));
+			//SpinWait.SpinUntil(() => DriverManager.WebDriver.SwitchTo().Alert(), TimeSpan.FromSeconds(5));
+            DriverManager.WebDriver.SwitchTo().Alert().Accept();
+
+            //Thread.Sleep(TimeSpan.FromSeconds(3));
+
+			SpinWait.SpinUntil(() => DriverManager.WebDriver.FindElement(Pages.Home.LogIn).Equals("login2"), TimeSpan.FromSeconds(3));
             DriverManager.WebDriver.FindElement(Pages.Home.LogIn).Click();
-			Thread.Sleep(TimeSpan.FromSeconds(3));
+			//Thread.Sleep(TimeSpan.FromSeconds(3));
 
 			DriverManager.WebDriver.FindElement(Pages.Popups.LogIn.Username).SendKeys(username);
 			DriverManager.WebDriver.FindElement(Pages.Popups.LogIn.Password).SendKeys(password);
 			DriverManager.WebDriver.FindElement(Pages.Popups.LogIn.LogInButton).Click();
-			Thread.Sleep(TimeSpan.FromSeconds(3));
+            //Thread.Sleep(TimeSpan.FromSeconds(3));
+            SpinWait.SpinUntil(() => DriverManager.WebDriver.FindElement(Pages.Home.LogOut).Equals("logout2"), TimeSpan.FromSeconds(3));
 
-		}
+            // Added to check that Login button has gone after logging in
+            Assert.IsTrue(DriverManager.WebDriver.FindElement(Pages.Home.LogOut).Displayed, "LogOut button is not displayed after logging in");
+        }
 
 		[Given(@"I am on a product page")]
 		public void GivenIAmOnAProductPage()
@@ -64,23 +70,35 @@ namespace Roq.Automation.Demo.DemoBlaze.StepDefinitions
 			DriverManager.WebDriver.SwitchTo().Alert().Accept();
 		}
 
-		[When(@"I navigate to my basket")]
+        [Given(@"I navigate to my basket")]
+        public void GivenINavigateToMyBasket()
+        {
+            By cart = Pages.Home.Cart;
+            IWebElement cartElement = DriverManager.WebDriver.FindElement(cart);
+            cartElement.Click();
+            Thread.Sleep(TimeSpan.FromSeconds(10));
+        }
+
+        [When(@"I navigate to the home page")]
+        public void WhenINavigateToTheHomePage()
+        {
+            DriverManager.WebDriver.Navigate().GoToUrl(Pages.Home.url);
+        }
+
+        [When(@"I navigate to my basket")]
 		public void WhenINavigateToMyBasket()
 		{
 			By cart = Pages.Home.Cart;
 			IWebElement cartElement = DriverManager.WebDriver.FindElement(cart);
 			cartElement.Click();
-			Thread.Sleep(TimeSpan.FromSeconds(10));
-		}
+            Thread.Sleep(TimeSpan.FromSeconds(3));
+        }
 
-		[Given(@"I navigate to my basket")]
-		public void GivenINavigateToMyBasket()
-		{
-			By cart = Pages.Home.Cart;
-			IWebElement cartElement = DriverManager.WebDriver.FindElement(cart);
-			cartElement.Click();
-			Thread.Sleep(TimeSpan.FromSeconds(10));
-		}
+        [When(@"I open the basket")]
+        public void WhenIOpenTheBasket()
+        {
+            DriverManager.WebDriver.FindElement(Pages.Home.Cart).Click();
+        }
 
         /*[Then(@"the total of my basket is correct")]
 		public void ThenTheTotalOfMyBasketIsCorrect()
@@ -91,38 +109,25 @@ namespace Roq.Automation.Demo.DemoBlaze.StepDefinitions
         [Then(@"the total of the basket is correct")]
         public void ThenTheTotalOfTheBasketIsCorrect()
         {
-            Assert.IsTrue(Pages.Cart.PriceIsCorrect((int)TestData.TestDataDictionary["CartTotal"]));
+            Assert.IsTrue(Pages.Cart.PriceIsCorrect((int)TestData.TestDataDictionary["CartTotal"]), "Total price of the basket is incorrect");
         }
-
-
-        [When(@"I navigate to the home page")]
-		public void WhenINavigateToTheHomePage()
-		{
-			DriverManager.WebDriver.Navigate().GoToUrl(Pages.Home.url);
-		}
 
 		[Then(@"the total of my basket is (.*)")]
-        public void ThenTheTotalOfMyBasketIs(int p0)
+        public void ThenTheTotalOfMyBasketIs(int total)
         {
-            Assert.IsTrue(Pages.Cart.PriceIsCorrect(p0));
+            Assert.IsTrue(Pages.Cart.PriceIsCorrect(total), $"The actual total of the basket is {total}");
         }
-
-        [When(@"I open the basket")]
-		public void WhenIOpenTheBasket()
-		{
-			DriverManager.WebDriver.FindElement(Pages.Home.Cart).Click();
-		}
 
 		[Then(@"my basket is empty")]
 		public void ThenMyBasketIsEmpty()
 		{
-			Assert.IsTrue(DriverManager.WebDriver.FindElements(By.XPath("//tbody[@id='tbodyid']/tr")).Count == 0);
+			Assert.IsTrue(DriverManager.WebDriver.FindElements(By.XPath("//tbody[@id='tbodyid']/tr")).Count == 0, "The basket is not empty");
 		}
 
 		[Then(@"the ""([^""]*)"" category is available")]
 		public void ThenTheCategoryIsAvailable(string category)
 		{
-			Assert.IsTrue(DriverManager.WebDriver.FindElements(By.XPath($"//a[text()='{category}']")).Count == 1);
+			Assert.IsTrue(DriverManager.WebDriver.FindElements(By.XPath($"//a[text()='{category}']")).Count == 1, $"{category} category is not available");
 		}
 	}
 }

@@ -19,16 +19,24 @@ namespace Roq.Automation.Demo.DemoBlaze.Utilities
 			{
 				case "Edge":
 					WebDriver = new EdgeDriver();
+					EdgeOptions edgeOptions = new EdgeOptions();
+					edgeOptions.AddArgument("--start-maximized");
 					break;
-				default:
+				case "Chrome":
 					WebDriver = new ChromeDriver();
+					ChromeOptions options = new ChromeOptions();
+					options.AddArgument("--start-maximized");
 					break;
+					//Added new default & added Chrome as a case
+				default:
+					throw new Exception("This browser is not supported");
 			}
 
 			//maximise window
-			WebDriver.Manage().Window.Maximize();
+			/*WebDriver.Manage().Window.Maximize();
+
 			WebDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-			WebDriver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(30);
+			WebDriver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(30);*/
 		}
 	}
 }
