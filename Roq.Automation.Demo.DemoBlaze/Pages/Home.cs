@@ -16,5 +16,8 @@ namespace Roq.Automation.Demo.DemoBlaze.Pages
 		public static By AboutUs => By.XPath("/html/body/nav/div[1]/ul/li[2]/a");
 		public static By Cart => By.XPath("//*[@id='cartur']");
 		public static By SignUp => By.XPath("//a[@data-target='#signInModal']");
+
+		// added
+		public static By LogOut => By.Id("logout2");
 	}
 }

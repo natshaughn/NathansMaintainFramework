@@ -6,7 +6,6 @@ namespace Roq.Automation.Demo.DemoBlaze.Pages
 	public static class Product
 	{
 		public static By AddToCart => By.XPath("//a[text()='Add to cart']");
-
 		public static By Description => By.XPath("//div[@id='myTabContent']//p");
 		public static By ProductImage => By.XPath("//div[@class='item active']/img");
 

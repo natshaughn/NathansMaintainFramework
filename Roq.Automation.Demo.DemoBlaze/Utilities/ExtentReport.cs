@@ -17,28 +17,26 @@ namespace Roq.Automation.Demo.DemoBlaze.Utilities
         public static ExtentTest? _feature;
         public static ExtentTest? _scenario;
 
-        public static String dir = AppDomain.CurrentDomain.BaseDirectory; // Directory of the project
-        public static String testResultPath = dir.Replace("bin\\Debug\\net6.0", "TestResults"); // replacing particular path with TestResults - folder created earlier, generate report in that folder
+        public static String dir = AppDomain.CurrentDomain.BaseDirectory;
+        public static String testResultPath = dir.Replace("bin\\Debug\\net6.0", "TestResults"); 
 
-        public static void ExtentReportInit()  //public static void ExtentReportInit(Hooks.AppInfo appInfo, string gridUrl)
+        public static void ExtentReportInit() 
         {
             // Configure and start HTML reporter
-            var htmlReporter = new ExtentHtmlReporter(testResultPath); // testResultPath - object = path for report - Object = ExtentHtmlReporter 
-            htmlReporter.Config.ReportName = "Desktop Automation Status Report"; // values for the report can be seen here
+            var htmlReporter = new ExtentHtmlReporter(testResultPath); 
+            htmlReporter.Config.ReportName = "Desktop Automation Status Report"; 
             htmlReporter.Config.DocumentTitle = "Desktop Automation Status Report";
-            htmlReporter.Config.Theme = Theme.Standard; // which colour 
-            htmlReporter.Start(); // start particular object 
+            htmlReporter.Config.Theme = Theme.Standard; 
+            htmlReporter.Start(); 
 
-            // Initialize ExtentReports and attach the HTML reporter
-            _extentReports = new ExtentReports(); // ExtentReports = object 
-            _extentReports.AttachReporter(htmlReporter); // attaching the reporter 
-            _extentReports.AddSystemInfo("Application", "Word"); // configurations - hard coded at the minute (TestRunSettings here? maybe)
+            _extentReports = new ExtentReports(); 
+            _extentReports.AttachReporter(htmlReporter); 
+            _extentReports.AddSystemInfo("Application", "Word"); 
         }
 
-        // Method to flush and close ExtentReports
         public static void ExtentReportTearDown()
         {
-            _extentReports.Flush(); // Method (), Flush - all logs getting flushed into HTML report
+            _extentReports.Flush();
         }
 
         public string addScreenshot(IWebDriver driver, ScenarioContext scenarioContext)
