@@ -39,7 +39,7 @@ namespace Roq.Automation.Demo.DemoBlaze.Utilities
             _extentReports.Flush();
         }
 
-        public string addScreenshot(IWebDriver driver, ScenarioContext scenarioContext)
+        public string AddScreenshot(IWebDriver driver, ScenarioContext scenarioContext)
         {
             ITakesScreenshot takesScreenshot = (ITakesScreenshot)driver;
             Screenshot screenshot = takesScreenshot.GetScreenshot();

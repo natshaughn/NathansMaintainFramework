@@ -13,6 +13,11 @@ namespace Roq.Automation.Demo.DemoBlaze.Utilities
 	{
 		public static WebDriver? WebDriver { get; set; }
 
+		public static void GoTo(string url)
+		{
+			WebDriver.Url = url;
+		}
+
 		public static void StartDriver(string browserName)
 		{
 			switch (browserName)
@@ -33,10 +38,10 @@ namespace Roq.Automation.Demo.DemoBlaze.Utilities
 			}
 
 			//maximise window
-			/*WebDriver.Manage().Window.Maximize();
+			WebDriver.Manage().Window.Maximize();
 
 			WebDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-			WebDriver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(30);*/
+			WebDriver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(30);
 		}
 	}
 }

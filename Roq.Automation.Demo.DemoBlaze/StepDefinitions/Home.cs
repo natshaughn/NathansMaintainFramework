@@ -11,8 +11,8 @@ namespace Roq.Automation.Demo.DemoBlaze.StepDefinitions
 		[Given(@"I am on the demo blaze website")]
 		public void GivenIAmOnTheDemoBlazeWebsite()
 		{
-			DriverManager.WebDriver.Navigate().GoToUrl(Pages.Home.url);
-            DriverManager.WebDriver.FindElement(Pages.Home.SignUp).Click();
+			//DriverManager.WebDriver.Navigate().GoToUrl(Pages.Home.url);
+			/*DriverManager.WebDriver.FindElement(Pages.Home.SignUp).Click();
 
             string username = Guid.NewGuid().ToString();
 			string password = Guid.NewGuid().ToString();			
@@ -35,49 +35,45 @@ namespace Roq.Automation.Demo.DemoBlaze.StepDefinitions
 			DriverManager.WebDriver.FindElement(Pages.Popups.LogIn.Password).SendKeys(password);
 			DriverManager.WebDriver.FindElement(Pages.Popups.LogIn.LogInButton).Click();
             //Thread.Sleep(TimeSpan.FromSeconds(3));
-            SpinWait.SpinUntil(() => DriverManager.WebDriver.FindElement(Pages.Home.LogOut).Equals("logout2"), TimeSpan.FromSeconds(3));
+            SpinWait.SpinUntil(() => DriverManager.WebDriver.FindElement(Pages.Home.LogOut).Equals("logout2"), TimeSpan.FromSeconds(3));*/
 
-            // Added to check that Login button has gone after logging in
-            Assert.IsTrue(DriverManager.WebDriver.FindElement(Pages.Home.LogOut).Displayed, "LogOut button is not displayed after logging in");
+			// Added to check that Login button has gone after logging in
+			//Assert.That(DriverManager.WebDriver.FindElement(Pages.Home.LogIn).Displayed, "LogIn button is not displayed after logging in");
+			Assert.That(DriverManager.WebDriver.Url, Is.EqualTo("https://www.demoblaze.com/index.html"));
         }
 
-		[Given(@"I am on a product page")]
+		[Given(@"I am on a product page"), When(@"I am on a product page")]
 		public void GivenIAmOnAProductPage()
 		{
-			List<IWebElement> cards = DriverManager.WebDriver.FindElements(By.XPath("//h4[@class='card-title']/a")).ToList();
+            /*List<IWebElement> cards = DriverManager.WebDriver.FindElements(By.XPath("//h4[@class='card-title']/a")).ToList();
 			IWebElement card = cards[new Random().Next(0, cards.Count)];
-			card.Click();
-		}
+			card.Click();*/
+            Pages.Home.NavigateToRandomProductPage();
 
-		[Given(@"I add the product to my basket"), When(@"I add the product to my basket")]
-		public void WhenIAddTheProductToMyBasket()
-		{
-			string stringPrice = Pages.Product.Getprice();
-			int price = int.Parse(stringPrice);
-			
-			if (TestData.TestDataDictionary.ContainsKey("CartTotal"))
-			{
-				int total = (int)TestData.TestDataDictionary["CartTotal"];
-				TestData.TestDataDictionary["CartTotal"] = total + price;
-			}
-			else
-			{
-				TestData.TestDataDictionary.Add("CartTotal", price);
-			}
+        }
 
-			DriverManager.WebDriver.FindElement(Pages.Product.AddToCart).Click();
-			Thread.Sleep(TimeSpan.FromSeconds(5));
-			DriverManager.WebDriver.SwitchTo().Alert().Accept();
-		}
-
-        [Given(@"I navigate to my basket")]
+        [Given(@"I navigate to my basket"), When(@"I navigate to my basket")]
         public void GivenINavigateToMyBasket()
         {
             By cart = Pages.Home.Cart;
             IWebElement cartElement = DriverManager.WebDriver.FindElement(cart);
             cartElement.Click();
-            Thread.Sleep(TimeSpan.FromSeconds(10));
+            //Thread.Sleep(TimeSpan.FromSeconds(10));
         }
+
+        [When(@"I open the page for the (.*)")]
+        public void WhenIOpenThePageForTheProduct(string productName)
+        {
+            /*DriverManager.WebDriver.FindElement(By.XPath($"//a[text()='{productName}']")).Click();*/
+            Pages.Home.NavigateToProductPage(productName);
+        }
+
+/*        // Moved from product page to home page 
+        [When(@"I open the product page for the ""([^""]*)""")]
+        public void WhenIOpenTheProductPageForThe(string productName)
+        {
+            DriverManager.WebDriver.FindElement(By.XPath($"//a[text()='{productName}']")).Click();
+        }*/
 
         [When(@"I navigate to the home page")]
         public void WhenINavigateToTheHomePage()
@@ -85,14 +81,16 @@ namespace Roq.Automation.Demo.DemoBlaze.StepDefinitions
             DriverManager.WebDriver.Navigate().GoToUrl(Pages.Home.url);
         }
 
-        [When(@"I navigate to my basket")]
+
+		// Added to one above 
+        /*[When(@"I navigate to my basket")] 
 		public void WhenINavigateToMyBasket()
 		{
 			By cart = Pages.Home.Cart;
 			IWebElement cartElement = DriverManager.WebDriver.FindElement(cart);
 			cartElement.Click();
             Thread.Sleep(TimeSpan.FromSeconds(3));
-        }
+        }*/
 
         [When(@"I open the basket")]
         public void WhenIOpenTheBasket()
@@ -106,28 +104,13 @@ namespace Roq.Automation.Demo.DemoBlaze.StepDefinitions
 			Assert.IsTrue(Pages.Cart.PriceIsCorrect((int)TestData.TestDataDictionary["CartTotal"]));
 		}*/
 
-        [Then(@"the total of the basket is correct")]
-        public void ThenTheTotalOfTheBasketIsCorrect()
-        {
-            Assert.IsTrue(Pages.Cart.PriceIsCorrect((int)TestData.TestDataDictionary["CartTotal"]), "Total price of the basket is incorrect");
-        }
-
-		[Then(@"the total of my basket is (.*)")]
-        public void ThenTheTotalOfMyBasketIs(int total)
-        {
-            Assert.IsTrue(Pages.Cart.PriceIsCorrect(total), $"The actual total of the basket is {total}");
-        }
-
-		[Then(@"my basket is empty")]
-		public void ThenMyBasketIsEmpty()
-		{
-			Assert.IsTrue(DriverManager.WebDriver.FindElements(By.XPath("//tbody[@id='tbodyid']/tr")).Count == 0, "The basket is not empty");
-		}
 
 		[Then(@"the ""([^""]*)"" category is available")]
 		public void ThenTheCategoryIsAvailable(string category)
 		{
-			Assert.IsTrue(DriverManager.WebDriver.FindElements(By.XPath($"//a[text()='{category}']")).Count == 1, $"{category} category is not available");
-		}
+            /*Assert.That(DriverManager.WebDriver.FindElements(By.XPath($"//a[text()='{category}']")).Count, Is.EqualTo(1), $"{category} category is not available");*/
+            string actualCategory = Pages.Home.IsCategoryAvailable(category);
+            Assert.That(actualCategory, Is.EqualTo(category), $"{category} category is not available");
+        }
 	}
 }

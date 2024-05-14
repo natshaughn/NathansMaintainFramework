@@ -21,5 +21,7 @@ namespace Roq.Automation.Demo.DemoBlaze.Utilities
 				return false;
 			}
 		}
+
+		// Add a spin wait here? 
 	}
 }

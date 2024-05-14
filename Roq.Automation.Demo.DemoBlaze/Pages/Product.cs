@@ -12,7 +12,7 @@ namespace Roq.Automation.Demo.DemoBlaze.Pages
 		public static string Getprice()
 		{
 			string price = DriverManager.WebDriver.FindElement(By.XPath("//h3[@class='price-container']")).Text.Replace("$", string.Empty);
-			price = price.Replace(DriverManager.WebDriver.FindElement(By.XPath("//h3[@class='price-container']/small")).Text, string.Empty).Trim();
+			price = price.Replace(DriverManager.WebDriver.FindElement(By.XPath("//h3[@class='price-container']/small")).Text, string.Empty).Trim(); // trim the *includes tax
 			return price;
 		}
 	}

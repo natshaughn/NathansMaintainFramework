@@ -34,6 +34,7 @@ namespace Roq.Automation.Demo.DemoBlaze.Hooks
 		public static void BeforeScenario(ScenarioContext scenarioContext)
 		{
 			DriverManager.StartDriver("Edge"); //Changed from "Firefox" because it's not implemented in Driver Manager class
+            DriverManager.GoTo("https://www.demoblaze.com/index.html");
             _scenario = _feature.CreateNode<Scenario>(scenarioContext.ScenarioInfo.Title);
         }
 
@@ -71,28 +72,27 @@ namespace Roq.Automation.Demo.DemoBlaze.Hooks
                 if (stepType == "Given")
                 {
                     _scenario.CreateNode<Given>(stepName).Fail(scenarioContext.TestError.Message,
-                        MediaEntityBuilder.CreateScreenCaptureFromPath(addScreenshot(driver, scenarioContext)).Build()); 
+                        MediaEntityBuilder.CreateScreenCaptureFromPath(AddScreenshot(driver, scenarioContext)).Build()); 
                 }
                 else if (stepType == "When")
                 {
                     _scenario.CreateNode<When>(stepName).Fail(scenarioContext.TestError.Message,
-                        MediaEntityBuilder.CreateScreenCaptureFromPath(addScreenshot(driver, scenarioContext)).Build());
+                        MediaEntityBuilder.CreateScreenCaptureFromPath(AddScreenshot(driver, scenarioContext)).Build());
                 }
                 else if (stepType == "Then")
                 {
                     _scenario.CreateNode<Then>(stepName).Fail(scenarioContext.TestError.Message,
-                        MediaEntityBuilder.CreateScreenCaptureFromPath(addScreenshot(driver, scenarioContext)).Build());
+                        MediaEntityBuilder.CreateScreenCaptureFromPath(AddScreenshot(driver, scenarioContext)).Build());
                 }
                 else if (stepType == "And")
                 {
                     _scenario.CreateNode<And>(stepName).Fail(scenarioContext.TestError.Message,
-                        MediaEntityBuilder.CreateScreenCaptureFromPath(addScreenshot(driver, scenarioContext)).Build());
+                        MediaEntityBuilder.CreateScreenCaptureFromPath(AddScreenshot(driver, scenarioContext)).Build());
                 }
             }
         }
 
         [AfterScenario]
-		// COME BACK TO THIS AND COMPARE WITH DESKTOP ONE
 		public static void AfterScenario(/*ScenarioContext scenarioContext*/)
 		{
             /*if (scenarioContext.TestError != null)
