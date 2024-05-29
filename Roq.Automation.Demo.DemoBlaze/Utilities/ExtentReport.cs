@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AventStack.ExtentReports;
+﻿using AventStack.ExtentReports;
 using AventStack.ExtentReports.Reporter;
 using AventStack.ExtentReports.Reporter.Configuration;
 using OpenQA.Selenium;
@@ -22,16 +17,15 @@ namespace Roq.Automation.Demo.DemoBlaze.Utilities
 
         public static void ExtentReportInit() 
         {
-            // Configure and start HTML reporter
             var htmlReporter = new ExtentHtmlReporter(testResultPath); 
-            htmlReporter.Config.ReportName = "Desktop Automation Status Report"; 
+            htmlReporter.Config.ReportName = "Desktop Automation Status Report"; //TODO: Update names 
             htmlReporter.Config.DocumentTitle = "Desktop Automation Status Report";
             htmlReporter.Config.Theme = Theme.Standard; 
             htmlReporter.Start(); 
 
             _extentReports = new ExtentReports(); 
             _extentReports.AttachReporter(htmlReporter); 
-            _extentReports.AddSystemInfo("Application", "Word"); 
+            _extentReports.AddSystemInfo("Application", "Demo Blaze"); 
         }
 
         public static void ExtentReportTearDown()
@@ -49,4 +43,3 @@ namespace Roq.Automation.Demo.DemoBlaze.Utilities
         }
     }
 }
-

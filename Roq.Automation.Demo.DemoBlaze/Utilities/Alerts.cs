@@ -1,9 +1,4 @@
 ﻿using OpenQA.Selenium;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Roq.Automation.Demo.DemoBlaze.Utilities
 {
@@ -12,8 +7,8 @@ namespace Roq.Automation.Demo.DemoBlaze.Utilities
 		public static bool IsAlertPresent()
 		{
 			try
-			{
-				DriverManager.WebDriver.SwitchTo().Alert();
+            {
+                DriverManager.WebDriver.SwitchTo().Alert();
 				return true;
 			}
 			catch (NoAlertPresentException)
@@ -21,7 +16,5 @@ namespace Roq.Automation.Demo.DemoBlaze.Utilities
 				return false;
 			}
 		}
-
-		// Add a spin wait here? 
 	}
 }

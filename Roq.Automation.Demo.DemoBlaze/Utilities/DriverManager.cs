@@ -1,11 +1,6 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Edge;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Roq.Automation.Demo.DemoBlaze.Utilities
 {
@@ -15,7 +10,7 @@ namespace Roq.Automation.Demo.DemoBlaze.Utilities
 
 		public static void GoTo(string url)
 		{
-			WebDriver.Url = url;
+            WebDriver.Url = url;
 		}
 
 		public static void StartDriver(string browserName)
@@ -24,24 +19,20 @@ namespace Roq.Automation.Demo.DemoBlaze.Utilities
 			{
 				case "Edge":
 					WebDriver = new EdgeDriver();
-					EdgeOptions edgeOptions = new EdgeOptions();
-					edgeOptions.AddArgument("--start-maximized");
+					EdgeOptions edgeOptions = new();
 					break;
 				case "Chrome":
 					WebDriver = new ChromeDriver();
-					ChromeOptions options = new ChromeOptions();
-					options.AddArgument("--start-maximized");
+					ChromeOptions options = new();
 					break;
-					//Added new default & added Chrome as a case
 				default:
 					throw new Exception("This browser is not supported");
 			}
 
-			//maximise window
 			WebDriver.Manage().Window.Maximize();
 
-			WebDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
-			WebDriver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(30);
+            WebDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
+            WebDriver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(30);
 		}
 	}
 }
