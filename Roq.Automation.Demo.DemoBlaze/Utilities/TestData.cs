@@ -11,7 +11,7 @@
 
 		public static void TearDown()
 		{
-			TestDataDictionary.Clear(); // got rid of null
-		}
+            TestDataDictionary.Clear();
+        }
 	}
 }

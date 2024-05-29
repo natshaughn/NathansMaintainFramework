@@ -1,9 +1,5 @@
 ﻿using AventStack.ExtentReports;
 using AventStack.ExtentReports.Gherkin.Model;
-using BoDi;
-using Microsoft.VisualStudio.TestPlatform.ObjectModel;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Edge;
 using Roq.Automation.Demo.DemoBlaze.Utilities;
 using TechTalk.SpecFlow;
 
@@ -33,7 +29,7 @@ namespace Roq.Automation.Demo.DemoBlaze.Hooks
         [BeforeScenario]
 		public static void BeforeScenario(ScenarioContext scenarioContext)
 		{
-			DriverManager.StartDriver("Edge"); //Changed from "Firefox" because it's not implemented in Driver Manager class
+			DriverManager.StartDriver("Edge");
             DriverManager.GoTo("https://www.demoblaze.com/index.html");
             _scenario = _feature.CreateNode<Scenario>(scenarioContext.ScenarioInfo.Title);
         }
@@ -64,11 +60,7 @@ namespace Roq.Automation.Demo.DemoBlaze.Hooks
                 {
                     _scenario.CreateNode<And>(stepName);
                 }
-            }
-
-            // When scenario fails 
-            if (scenarioContext.TestError != null)
-            {
+            } else { 
                 if (stepType == "Given")
                 {
                     _scenario.CreateNode<Given>(stepName).Fail(scenarioContext.TestError.Message,
@@ -93,17 +85,8 @@ namespace Roq.Automation.Demo.DemoBlaze.Hooks
         }
 
         [AfterScenario]
-		public static void AfterScenario(/*ScenarioContext scenarioContext*/)
+		public static void AfterScenario()
 		{
-            /*if (scenarioContext.TestError != null)
-			{
-				string path = $@"{Path.GetTempPath()}\Automation\Output\";
-				Directory.CreateDirectory(path);
-				string fileName = $"Screenshot_{scenarioContext.ScenarioInfo.Title}.Png";
-				string filePath = Path.Combine(path, fileName);
-				((ITakesScreenshot)DriverManager.WebDriver).GetScreenshot().SaveAsFile(filePath, ScreenshotImageFormat.Png);
-			}
-*/
             DriverManager.WebDriver.Close();
 		}
 	}
